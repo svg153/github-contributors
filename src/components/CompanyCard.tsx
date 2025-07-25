@@ -17,14 +17,14 @@ export function CompanyCard({ company }: CompanyCardProps) {
   return (
     <Card className="hover:shadow-md transition-shadow">
       <CardHeader className="pb-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            <div className="p-2 bg-primary/10 rounded-lg flex-shrink-0">
               <Building className="text-primary" size={24} />
             </div>
-            <div>
-              <CardTitle className="text-xl">{company.name}</CardTitle>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
+            <div className="min-w-0 flex-1">
+              <CardTitle className="text-lg sm:text-xl truncate">{company.name}</CardTitle>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-muted-foreground mt-1">
                 <div className="flex items-center gap-1">
                   <Users size={16} />
                   <span>{company.employeeCount} contributor{company.employeeCount !== 1 ? 's' : ''}</span>
@@ -36,7 +36,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
               </div>
             </div>
           </div>
-          <Badge variant="secondary" className="bg-accent/10 text-accent-foreground">
+          <Badge variant="secondary" className="bg-accent/10 text-accent-foreground self-start sm:self-center text-xs sm:text-sm whitespace-nowrap">
             {Math.round((company.totalContributions / company.contributors.reduce((sum, c) => sum + c.contributions, 0)) * 100) || 0}% of total
           </Badge>
         </div>
