@@ -11,16 +11,18 @@ import {
   GitFork, 
   User,
   Calendar,
-  Download
+  Download,
+  ArrowClockwise
 } from '@phosphor-icons/react';
 import { AnalysisResult } from '@/lib/types';
 
 interface AnalysisResultsProps {
   result: AnalysisResult;
   onReset: () => void;
+  onReprocess: (owner: string, repo: string) => void;
 }
 
-export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
+export function AnalysisResults({ result, onReset, onReprocess }: AnalysisResultsProps) {
   const totalCompanyContributions = result.companies.reduce((sum, company) => sum + company.totalContributions, 0);
   const unknownContributions = result.unknownContributors.reduce((sum, contributor) => sum + contributor.contributions, 0);
   const companyContributorCount = result.companies.reduce((sum, company) => sum + company.employeeCount, 0);
@@ -59,10 +61,15 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
     URL.revokeObjectURL(url);
   };
 
+  const handleReprocess = () => {
+    const [owner, repo] = result.repository.split('/');
+    onReprocess(owner, repo);
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">Analysis Results</h1>
           <p className="text-muted-foreground mt-1">
@@ -70,18 +77,22 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
               href={`https://github.com/${result.repository}`}
               target="_blank" 
               rel="noopener noreferrer"
-              className="font-medium text-primary hover:text-primary/80 underline transition-colors"
+              className="font-medium text-primary hover:text-primary/80 underline transition-colors break-all"
             >
               {result.repository}
             </a>
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={exportResults} size="sm">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button variant="outline" onClick={exportResults} size="sm" className="w-full sm:w-auto">
             <Download className="mr-2" size={16} />
             Export
           </Button>
-          <Button onClick={onReset} variant="outline" size="sm">
+          <Button variant="outline" onClick={handleReprocess} size="sm" className="w-full sm:w-auto">
+            <ArrowClockwise className="mr-2" size={16} />
+            Reprocess
+          </Button>
+          <Button onClick={onReset} variant="outline" size="sm" className="w-full sm:w-auto">
             New Analysis
           </Button>
         </div>

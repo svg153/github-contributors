@@ -144,7 +144,7 @@ function App() {
           )}
 
           {state === 'results' && result && (
-            <AnalysisResults result={result} onReset={handleReset} />
+            <AnalysisResults result={result} onReset={handleReset} onReprocess={handleAnalyze} />
           )}
 
           {state === 'error' && (
