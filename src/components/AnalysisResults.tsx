@@ -66,7 +66,14 @@ export function AnalysisResults({ result, onReset }: AnalysisResultsProps) {
         <div>
           <h1 className="text-3xl font-bold">Analysis Results</h1>
           <p className="text-muted-foreground mt-1">
-            Repository: <span className="font-medium">{result.repository}</span>
+            Repository: <a 
+              href={`https://github.com/${result.repository}`}
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="font-medium text-primary hover:text-primary/80 underline transition-colors"
+            >
+              {result.repository}
+            </a>
           </p>
         </div>
         <div className="flex gap-2">
