@@ -1,4 +1,5 @@
 import { Contributor, CompanyData, AnalysisResult, RepositoryInfo } from './types';
+import { LogoService } from './logo-service';
 
 const GITHUB_API_BASE = 'https://api.github.com';
 
@@ -187,12 +188,18 @@ export class GitHubAnalyzer {
         }
       }
       
+      onProgress?.(90, 'Fetching company logos...');
+      
+      const companyNames = Array.from(companyMap.keys());
+      const logos = await LogoService.fetchMultipleLogos(companyNames);
+      
       const companies: CompanyData[] = Array.from(companyMap.entries())
         .map(([name, contributors]) => ({
           name,
           contributors: contributors.sort((a, b) => b.contributions - a.contributions),
           totalContributions: contributors.reduce((sum, c) => sum + c.contributions, 0),
-          employeeCount: contributors.length
+          employeeCount: contributors.length,
+          logo: logos[name] || undefined
         }))
         .sort((a, b) => b.totalContributions - a.totalContributions);
 

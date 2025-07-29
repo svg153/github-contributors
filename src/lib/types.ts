@@ -16,6 +16,7 @@ export interface CompanyData {
   contributors: Contributor[];
   totalContributions: number;
   employeeCount: number;
+  logo?: string;
 }
 
 export interface AnalysisResult {

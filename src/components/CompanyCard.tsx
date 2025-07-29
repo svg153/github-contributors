@@ -4,8 +4,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Building, Users, GitCommit, ChevronDown, ChevronUp, User } from '@phosphor-icons/react';
+import { Users, GitCommit, ChevronDown, ChevronUp, User } from '@phosphor-icons/react';
 import { CompanyData } from '@/lib/types';
+import { CompanyLogo } from './CompanyLogo';
 
 interface CompanyCardProps {
   company: CompanyData;
@@ -19,9 +20,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
       <CardHeader className="pb-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0 flex-1">
-            <div className="p-2 bg-primary/10 rounded-lg flex-shrink-0">
-              <Building className="text-primary" size={24} />
-            </div>
+            <CompanyLogo logoUrl={company.logo} companyName={company.name} />
             <div className="min-w-0 flex-1">
               <CardTitle className="text-lg sm:text-xl truncate">{company.name}</CardTitle>
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-muted-foreground mt-1">
